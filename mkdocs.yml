@@ -1,0 +1,7 @@
+site_name: Prompt Classifier
+repo_url: https://github.com/mrodgers/prompt_classifier
+theme:
+  name: material
+
+nav:
+  - Home: index.md

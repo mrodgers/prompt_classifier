@@ -1,0 +1,26 @@
+# Compiled Python files
+__pycache__/
+*.pyc
+
+# Coverage reports
+.coverage
+htmlcov/
+coverage.xml
+
+# Pytest
+.pytest_cache/
+
+# Pytest coverage
+.pytest_cov/
+
+# data
+./parsed_dynamo_data_orig.csv
+./parsed_dynamo_data.csv
+./parsed_dynamo_data_orig.csv.gz
+./parsed_dynamo_data.csv.gz
+./parsed_dynamo_data_orig.csv.gz.part
+./parsed_dynamo_data.csv.gz.part
+
+.ruff_cache/
+.venv/
+
