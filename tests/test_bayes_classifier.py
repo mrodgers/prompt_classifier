@@ -23,3 +23,33 @@ def test_classify_verbose_output(capsys):
     classify_session(session, threshold=0.8, verbose=True)
     out, _ = capsys.readouterr()
     assert "Belief:" in out
+
+
+def test_high_risk_override(monkeypatch):
+    from src.bayes_classifier import classify_session
+
+    # Always return a high likelihood to trigger override
+    monkeypatch.setattr(
+        "src.bayes_classifier.estimate_injection_likelihood", lambda _: 0.99
+    )
+
+    session = ["User: harmless-looking prompt", "User: another normal line"]
+    results = classify_session(session)
+
+    assert all(label == "malicious" for _, _, label in results)
+
+
+def test_verbose_high_risk_override(monkeypatch, capsys):
+    # Force high-risk path
+    monkeypatch.setattr(
+        "src.bayes_classifier.estimate_injection_likelihood", lambda _: 0.99
+    )
+
+    from src.bayes_classifier import classify_session
+
+    session = ["User: innocuous line", "User: another one"]
+
+    classify_session(session, verbose=True, threshold=0.8)
+    out, _ = capsys.readouterr()
+
+    assert "⚠️ High-risk prompt detected!" in out
